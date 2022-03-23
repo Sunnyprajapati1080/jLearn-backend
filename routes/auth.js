@@ -2,6 +2,7 @@ const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const { body, validationResult } = require("express-validator")
 const jwt = require("jsonwebtoken")
+const fetchUser = require("../middlewares/fetchuser")
 const User = require("../models/User")
 
 // create a user using POST method. no login required.
@@ -69,6 +70,15 @@ router.post("/login", [
     } catch (error) {
         res.status(500).send({ error: error.message })
     }
+})
 
+// get userdetails. login required
+router.post('/getUser',fetchUser, async (req,res)=>{
+    try {
+        const user = await User.findById(req.user.id).select("-password")
+        res.send(user)
+    } catch (error) {
+        res.status(500).send({ error: error })
+    }
 })
 module.exports = router
