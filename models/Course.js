@@ -10,10 +10,17 @@ const courseSchema = new mongoose.Schema({
         required:true
     },
     desc: {
+        type: String
+    },
+    imgUrl: {
+        type: String
+    },
+    note: {
         type: String,
+        default:""
     },
     videoUrl: {
-        type: String,
+        type: String
     }
 })
 
